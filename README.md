@@ -1,0 +1,1 @@
+https://github.com/RodrigoMvs123/Kubernetes-Ingress-Tutorial-for-Beginners-simply-explained-Kubernetes-Tutorial-22.git
