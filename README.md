@@ -1,7 +1,5 @@
 ## Kubernetes-Ingress-Tutorial-for-Beginners-simply-explained-Kubernetes-Tutorial-22
 
-Tomorrow
-
 - https://www.youtube.com/watch?v=80Ew_fsV4rM 
 - https://github.com/RodrigoMvs123/Kubernetes-Ingress-Tutorial-for-Beginners-simply-explained-Kubernetes-Tutorial-22
 
