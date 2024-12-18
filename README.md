@@ -265,7 +265,6 @@ spec:
     analytics service
 
             pod
-
        analytics pod
 ```
 - http://myapp.com/shopping
