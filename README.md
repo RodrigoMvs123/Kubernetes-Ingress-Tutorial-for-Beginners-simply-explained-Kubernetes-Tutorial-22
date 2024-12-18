@@ -226,7 +226,182 @@ Open in Browser
 
 ```
 
+#### Configure Default Backend in Ingress
 
+Command Prompt ( Terminal )
+```
+kubectl describe ingress myapp-ingress 
+> Name:             myapp-ingress
+  Namespace:        default
+  Address:       
+  Default backend:  default-http-backend:80 (<none>)
+  Rules:
+  Host              Path   Backends
+  ----              ----   --------
+  myapp.com         
+                    myapp-internal-service:8080 (<none>)
+```
+
+ExampleYAMLfileDefaultbackendIngress.yaml
+```yaml 
+apiVersion: v1
+kind: Service
+metadata: 
+  name: default-http-backend
+spec: 
+  selector: 
+    app: default-response-app
+  ports: 
+    - protocol:  TCP
+      port:  80
+      targetPort:  8080
+```
+
+#### Multiple Paths for same Host
+
+- http://myapp.com/analytics
+```
+            svc
+    analytics service
+
+            pod
+
+       analytics pod
+```
+- http://myapp.com/shopping
+```
+            svc
+     shopping service 
+
+            pod
+        shopping pod
+```
+
+ExampleYAMlfileMultiplepathsForSameHost.yaml
+```yaml
+apiVersion: networking.k8s.io/vibeta1
+kind: Ingress
+metadata: 
+  name: simple-fanout-example
+  annotations: 
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec: 
+  rules: 
+  - host: myapp.com
+    http:
+      paths: 
+      - path: /analytics
+        backend:
+          serviceName: analytics-service
+          servicePort: 3000
+      - path: /shopping
+        backend:
+          serviceName: shopping-service
+          servicePort: 8080
+```
+
+#### Multiple Sub-Domains or Domains
+
+Instead of:
+
+- http://myapp.com/anaçytics
+
+- http://analytics.myapp.com
+```
+            svc
+      analytics service 
+
+            pod
+        analytics pod
+```
+
+ExampleYAMlfileMultiplepathsForSameHost.yaml
+```yaml
+apiVersion: networking.k8s.io/vibeta1
+kind: Ingress
+metadata: 
+  name: name-virtual-host-ingress
+spec: 
+  rules: 
+  - host: analytics.myapp.com
+    http:
+      paths: 
+        backend:
+          serviceName: analytics-service
+          servicePort: 3000
+  - host: shopping.myapp.com
+    http:
+      paths:
+        backend:
+          serviceName: shopping-service
+          servicePort: 8080
+``` 
+
+## Configuring TLS Certificate - https://
+
+
+
+ExampleYAMlConfiguringTLSCertificate.yaml
+```yaml
+apiVersion: networking.k8s.io/vibeta1
+kind: Ingress
+metadata: 
+  name: tls-example-ingress
+spec: 
+  rules: 
+  - host: myapp.com
+    http:
+      paths: 
+        backend:
+          serviceName: myapp-internal-service
+          servicePort: 8080
+```
+
+```  
+             ing
+```
+
+ExampleYAMlConfiguringTLSCertificate.yaml
+```yaml
+apiVersion: networking.k8s.io/vibeta1
+kind: Ingress
+metadata: 
+  name: tls-example-ingress
+spec: 
+  tsl: 
+  - hosts: 
+    - myapp.com
+    secretName: myapp-secret-tls
+  rules:
+    - host: myapp.com
+      http: 
+        paths:
+        - path:
+          backend:
+            serviceName: myapp-internal-service
+            servicePort: 8080
+```
+
+```
+            secret
+```
+
+1. Data keys need to be **"tls.crt"** and **"tls.key"**
+2. Values are **file contents** 
+3. Secret component must be in the **same namespace** as the Ingress component  
+
+ExampleYAMlConfiguringTLSCertificate.yaml
+```yaml
+apiVersion: v1
+kind: Secret 
+metadata: 
+  name: myapp-secret-tls
+  namespace: default
+data: 
+  tls: base64 encoded cert
+  tls: base64 encoded key
+type: kubernetes.k8s.io/tls
+```
 
 
 
