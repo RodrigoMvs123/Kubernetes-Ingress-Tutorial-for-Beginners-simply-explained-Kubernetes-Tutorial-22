@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/vibeta1
+kind: Ingress
+metadata: 
+  name: tls-example-ingress
+spec: 
+  tsl: 
+  - hosts: 
+    - myapp.com
+    secretName: myapp-secret-tls
+  rules:
+    - host: myapp.com
+      http: 
+        paths:
+        - path:
+          backend:
+            serviceName: myapp-internal-service
+            servicePort: 8080

@@ -138,7 +138,7 @@ kubectl get all -n kubernetes-dashboard
 
 Create Ingress Rule ( Configuration )
 
-ExampleYAMLfileIngress.yaml
+ExampleYAMLIngressRule.yaml
 ```yaml 
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
@@ -242,7 +242,7 @@ kubectl describe ingress myapp-ingress
                     myapp-internal-service:8080 (<none>)
 ```
 
-ExampleYAMLfileDefaultbackendIngress.yaml
+ExampleYAMLfileDefaultBackendIngress.yaml
 ```yaml 
 apiVersion: v1
 kind: Service
@@ -276,7 +276,7 @@ spec:
         shopping pod
 ```
 
-ExampleYAMlfileMultiplepathsForSameHost.yaml
+ExampleYAMlfileMultiplePathsForSameHost.yaml
 ```yaml
 apiVersion: networking.k8s.io/vibeta1
 kind: Ingress
@@ -314,7 +314,7 @@ Instead of:
         analytics pod
 ```
 
-ExampleYAMlfileMultiplepathsForSameHost.yaml
+ExampleYAMlfileMultiplePathsForMultipleSubDomainsOrDomains.yaml
 ```yaml
 apiVersion: networking.k8s.io/vibeta1
 kind: Ingress
@@ -360,7 +360,7 @@ spec:
              ing
 ```
 
-ExampleYAMlConfiguringTLSCertificate.yaml
+ExampleYAMlConfiguringTLSCertificateIngress.yaml
 ```yaml
 apiVersion: networking.k8s.io/vibeta1
 kind: Ingress
@@ -389,7 +389,7 @@ spec:
 2. Values are **file contents** 
 3. Secret component must be in the **same namespace** as the Ingress component  
 
-ExampleYAMlConfiguringTLSCertificate.yaml
+ExampleYAMlConfiguringTLSCertificateSecret.yaml
 ```yaml
 apiVersion: v1
 kind: Secret 
